@@ -51,6 +51,7 @@ class Sensor:
 
 async def main():
     display = Display(scl = 7, sda = 6, driver = 'ssd1306')
+    display.fb.rotate(0)
     sensor = Sensor()
     screens = Screens(display, sensor)
     btn = Btn(8, 9)
@@ -60,6 +61,7 @@ async def main():
 
     while True:
         screens.main(btn.state)
+        fan_pwm.duty_u16(duty((btn.state + 1) * 25))
         await asyncio.sleep_ms(10)
 
 
